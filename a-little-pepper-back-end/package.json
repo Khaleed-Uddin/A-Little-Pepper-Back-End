@@ -4,6 +4,7 @@
   "description": "back-end",
   "main": "server.js",
   "scripts": {
+    "start": "cd a-little-pepper-back-end && npm i && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
