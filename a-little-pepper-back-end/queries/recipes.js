@@ -1,61 +1,57 @@
 const db = require("../db/dbConfig.js");
-const getAllCandles = async () => {
+const getAllRecipes = async () => {
     try {
-   
-      const allCandles = await db.any("SELECT * FROM candles");
-      return allCandles;
+        const allRecipes = await db.any("SELECT * FROM recipes");
+        return allRecipes;
     } catch (err) {
-      return err;
+        return err;
     }
-  };
+};
 
-  const getCandle = async (id) => {
+const getRecipe = async (id) => {
     try {
-      
-      const oneCandle = await db.one("SELECT * FROM candles WHERE id=$1", id);
-      return oneCandle;
+        const oneRecipe = await db.one("SELECT * FROM recipes WHERE id=$1", id);
+        return oneRecipe;
     } catch (error) {
-    
-      return error;
+        return error;
     }
-  };
-  const createCandle = async (candle) => {
-    const { name, price, image, category } = candle;
-    try {
-      const newCandle = await db.one(
-        "INSERT INTO candles (name, price, image, category) VALUES ($1, $2, $3, $4) RETURNING *",
-        [name, price,  image ,category ]
-      );
-      return newCandle;
-    } catch (error) {
-      return error;
-    }
-  };
-  const deleteCandle = async (id) => {
-    try {
-      const deletedCandle = await db.one("DELETE FROM candles WHERE id = $1 RETURNING *", id);
-      return deletedCandle;
-    } catch (err) {
-      return err;
-    }
-  };
+};
 
-  const updateCandle = async (candle, id) => {
-    const { name,price, image, category  } = candle;
+const createRecipe = async (recipe) => {
+    const { name, cal, fat, carb, protein, photos, ingredients, instructions } = recipe;
     try {
-     
-      const updatedCandle = await db.one("UPDATE candles SET name = $1, price = $2, image = $3, category = $4 WHERE id = $5 RETURNING *",
-      
-      [name, price, image ,category, id]);
-      return updatedCandle;
-    } catch (err) {
-      return err;
+        const newRecipe = await db.one(
+            "INSERT INTO recipes (name, cal, fat, carb, protein, photos, ingredients, instructions ) VALUES ($1, $2, $3, $4, $5, $6, $7,$8) RETURNING *",
+            [name, cal, fat, carb, protein, photos, ingredients, instructions]
+        );
+        return newRecipe;
+    } catch (error) {
+        return error;
     }
-  }
-  module.exports = { 
-    getAllCandles, 
-    getCandle, 
-    createCandle, 
-    deleteCandle,
-    updateCandle
-  };
+};
+const deleteRecipe = async (id) => {
+    try {
+        const deletedRecipe = await db.one("DELETE FROM recipes WHERE id = $1 RETURNING *", id);
+        return deletedRecipe;
+    } catch (err) {
+        return err;
+    }
+};
+
+const updateRecipe = async (recipe, id) => {
+    const { name, cal, fat, carb, protein, photos, ingredients, instructions } = recipe;
+    try {
+        const updatedRecipe = await db.one("UPDATE recipes SET name = $1, cal = $2, fat = $3, carb = $4, protein = $5, photos = $6, ingredients = $7, instructions = $8 WHERE id = $9 RETURNING *",
+            [name,cal, fat, carb, protein, photos, ingredients, instructions, id]);
+        return updatedRecipe;
+    } catch (err) {
+        return err;
+    }
+}
+module.exports = {
+    getAllRecipes,
+    getRecipe,
+    createRecipe,
+    deleteRecipe,
+    updateRecipe
+};
