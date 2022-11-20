@@ -32,7 +32,6 @@ recipes.get("/:id", async (req, res) => {
 
 recipes.post("/", async (req, res) => {
     const { body } = req;
-    
     try {
         const createdRecipe = await createRecipe(body)
         if (createdRecipe.id) {
@@ -40,8 +39,8 @@ recipes.post("/", async (req, res) => {
         } else {
             res.status(422).json({ success: false, payload: "Must include name field" })
         }
-    } catch (err) {
-        console.log(err)
+    } catch (error) {
+        console.log(error)
     }
 });
 
