@@ -1,28 +1,28 @@
 const express = require('express');
 const recipes = express.Router();
-const { getAllSnacks, getSnack, createSnack, deleteSnack, updateSnack } = require('../queries/recipes');
+const { getAllRecipes, getRecipe, createRecipe, deleteRecipe, updateRecipe } = require('../queries/recipes');
 
 
 
-snacks.get('/', async (req, res) => {
-    const allSnacks = await getAllSnacks();
-    if (allSnacks[0]) {
+recipes.get('/', async (req, res) => {
+    const allRecipes = await getAllRecipes();
+    if (allRecipes[0]) {
         res.status(200).json({
             success: true,
-            payload: allSnacks
+            payload: allRecipes
         });
     } else {
         res.status(500).json({ error: "server error" });
     }
 });
 
-snacks.get("/:id", async (req, res) => {
+recipes.get("/:id", async (req, res) => {
     const { id } = req.params;
-    const snack = await getSnack(id);
-    if (snack.id) {
+    const recipe = await getRecipe(id);
+    if (recipe.id) {
         res.json({
             success: true,
-            payload: snack
+            payload: recipe
         });
     } else {
         res.status(404).json({
@@ -32,14 +32,13 @@ snacks.get("/:id", async (req, res) => {
     }
 });
 
-snacks.post("/", async (req, res) => {
+recipes.post("/", async (req, res) => {
     const { body } = req;
-    body.is_healthy = confirmHealth(body);
-    body.name = validateSnackName(body);
+    
     try {
-        const createdSnack = await createSnack(body)
-        if (createdSnack.id) {
-            res.status(200).json({ success: true, payload: createdSnack })
+        const createdRecipe = await createRecipe(body)
+        if (createdRecipe.id) {
+            res.status(200).json({ success: true, payload: createdRecipe })
         } else {
             res.status(422).json({ success: false, payload: "Must include name field" })
         }
@@ -48,13 +47,13 @@ snacks.post("/", async (req, res) => {
     }
 });
 
-snacks.delete("/:id", async (req, res) => {
+recipes.delete("/:id", async (req, res) => {
     const { id } = req.params;
-    const deletedSnack = await deleteSnack(id);
-    if (deletedSnack.id) {
+    const deletedRecipe = await deleteRecipe(id);
+    if (deletedRecipe.id) {
         res.status(200).json({
             success: true,
-            payload: deletedSnack
+            payload: deletedRecipe
         });
     } else {
         res.status(404).json({
@@ -64,17 +63,17 @@ snacks.delete("/:id", async (req, res) => {
     }
 });
 
-snacks.put("/:id", async (req, res) => {
+recipes.put("/:id", async (req, res) => {
     const { id } = req.params;
-    const updatedSnack = await updateSnack(req.body, id);
-    if (updatedSnack.id) {
+    const updatedRecipe = await updateRecipe(req.body, id);
+    if (updatedRecipe.id) {
         res.status(200).json({
             success: true,
-            payload: updatedSnack
+            payload: updatedRecipe
         });
     } else {
         res.status(404).json({ error: "Not found" })
     }
 });
 
-module.exports = snacks;
+module.exports = recipes;
