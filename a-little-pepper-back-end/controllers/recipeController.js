@@ -2,8 +2,6 @@ const express = require('express');
 const recipes = express.Router();
 const { getAllRecipes, getRecipe, createRecipe, deleteRecipe, updateRecipe } = require('../queries/recipes');
 
-
-
 recipes.get('/', async (req, res) => {
     const allRecipes = await getAllRecipes();
     if (allRecipes[0]) {
