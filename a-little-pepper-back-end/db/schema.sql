@@ -3,7 +3,20 @@ CREATE DATABASE alittle_pepper;
 
 \c alittle_pepper;
 
-DROP TABLE IF EXISTS recipes;
+-- DROP TABLE IF EXISTS profiles;
+
+
+CREATE TABLE profiles(
+    id SERIAL PRIMARY KEY, 
+    uid TEXT NOT NULL,
+    name TEXT NOT NULL, 
+    picture TEXT,
+    cal INTEGER, 
+    fat INTEGER,
+    carb INTEGER,
+    protein INTEGER
+    recipes TEXT
+);
 
 CREATE TABLE recipes(
     id SERIAL PRIMARY KEY, 
@@ -15,4 +28,6 @@ CREATE TABLE recipes(
     photos TEXT, 
     ingredients TEXT NOT NULL, 
     instructions TEXT NOT NULL
-);
+)
+
+
