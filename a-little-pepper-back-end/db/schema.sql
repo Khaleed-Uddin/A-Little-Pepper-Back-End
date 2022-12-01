@@ -14,7 +14,7 @@ CREATE TABLE profiles(
     cal INTEGER, 
     fat INTEGER,
     carb INTEGER,
-    protein INTEGER
+    protein INTEGER,
     recipes TEXT
 );
 
@@ -28,6 +28,12 @@ CREATE TABLE recipes(
     photos TEXT, 
     ingredients TEXT NOT NULL, 
     instructions TEXT NOT NULL
+)
+
+CREATE TABLE users_recipes(
+    id SERIAL PRIMARY KEY, 
+    user_id REFERENCES profiles.uid,
+    recipe_id REFERENCES recipes.id
 )
 
 
