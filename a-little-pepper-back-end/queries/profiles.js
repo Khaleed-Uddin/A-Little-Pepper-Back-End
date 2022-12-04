@@ -25,16 +25,12 @@ const getProfile = async (uid) => {
 };
 
 const createProfile = async (profile) => {
-  let { uid, name, picture, cal, fat, carb, protein} = profile;
-
-  if(!picture){
-    picture = "https://cdn.pixabay.com/photo/2021/05/24/09/15/ethereum-logo-6278329_960_720.png"
-  }
+  let { uid, name, cal, fat, carb, protein} = profile;
 
   try {
     const newProfile = await db.one(
-      "INSERT INTO profiles (uid, name, picture, cal, fat, carb, protein) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-      [uid, name, picture, cal, fat, carb, protein]
+      "INSERT INTO profiles (uid, name, cal, fat, carb, protein) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [uid, name, cal, fat, carb, protein]
     );
     return newProfile;
   } catch (error) {
@@ -53,19 +49,15 @@ const deleteProfile = async (id) => {
 // We need to pass in the Profile - the information to change
 // && the ID of the Profile to access it in the DB
 const updateProfile = async (profile, id) => {
-  let { uid, name, picture, cal, fat, carb, protein } = profile;
-
-  if(!picture){
-    picture = "https://cdn.pixabay.com/photo/2021/05/24/09/15/ethereum-logo-6278329_960_720.png"
-  }
+  let { uid, name, cal, fat, carb, protein } = profile;
 
   try {
     // first argument is the QUERY string
     // second argument is the actual DATA 
-    const updatedProfile = await db.one("UPDATE profiles SET uid = $1, name = $2, picture = $3, cal = $4, fat = $5, carb = $6, protein = $7 WHERE id = $8 RETURNING *",
+    const updatedProfile = await db.one("UPDATE profiles SET uid = $1, name = $2, cal = $3, fat = $4, carb = $5, protein = $6 WHERE id = $7 RETURNING *",
     // remember the order MATTERS here 
     // $1  $2   $3        $4           $5
-    [uid, name, picture, cal, fat, carb, protein, id]);
+    [uid, name, cal, fat, carb, protein, id]);
     return updatedProfile;
   } catch (err) {
     return err;
