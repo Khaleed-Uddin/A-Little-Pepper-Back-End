@@ -11,7 +11,6 @@ const {
 
 // INDEX
 profiles.get("/", async (req, res) => {
-  console.log("its hitting")
   const allProfiles = await getAllProfiles();
   if (allProfiles[0]) {
     res.status(200).json(allProfiles);
