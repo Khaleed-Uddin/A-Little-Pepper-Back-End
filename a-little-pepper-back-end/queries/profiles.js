@@ -25,12 +25,12 @@ const getProfile = async (uid) => {
 };
 
 const createProfile = async (profile) => {
-  let { uid, name, cal, fat, carb, protein } = profile;
+  let { uid, name, cal, fat, carb, protein, recipes } = profile;
 
   try {
     const newProfile = await db.one(
-      "INSERT INTO profiles (uid, name, cal, fat, carb, protein) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-      [uid, name, cal, fat, carb, protein]
+      "INSERT INTO profiles (uid, name, cal, fat, carb, protein, recipes) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+      [uid, name, cal, fat, carb, protein, recipes]
     );
     return newProfile;
   } catch (error) {
@@ -54,13 +54,10 @@ const deleteProfile = async (id) => {
 const updateProfile = async (profile, id) => {
   let { uid, name, cal, fat, carb, protein, recipes } = profile;
   try {
-    console.log(uid, name, cal, fat, carb)
     // first argument is the QUERY string
     // second argument is the actual DATA
     const updatedProfile = await db.one(
-      "UPDATE profiles SET uid = $1, name = $2, cal = $3, fat = $4, carb = $5, protein = $6, recipes = $7 WHERE id = $8 RETURNING *",
-      // remember the order MATTERS here
-      // $1  $2   $3        $4           $5
+      "UPDATE profiles SET uid=$1, name=$2, cal=$3, fat=$4, carb=$5, protein=$6, recipes=$7 WHERE uid=$8 RETURNING *",
       [uid, name, cal, fat, carb, protein, recipes, id]
     );
     return updatedProfile;
