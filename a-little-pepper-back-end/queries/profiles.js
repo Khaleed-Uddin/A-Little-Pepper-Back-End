@@ -1,12 +1,12 @@
 const db = require("../db/dbConfig.js");
 
 const getAllProfiles = async () => {
-    try {
-        const allProfiles = await db.any("SELECT * FROM profiles");
-        return allProfiles;
-      } catch (error) {
-        return error;
-      }
+  try {
+    const allProfiles = await db.any("SELECT * FROM profiles");
+    return allProfiles;
+  } catch (error) {
+    return error;
+  }
 };
 
 const getProfile = async (uid) => {
@@ -25,7 +25,7 @@ const getProfile = async (uid) => {
 };
 
 const createProfile = async (profile) => {
-  let { uid, name, cal, fat, carb, protein} = profile;
+  let { uid, name, cal, fat, carb, protein } = profile;
 
   try {
     const newProfile = await db.one(
@@ -40,7 +40,10 @@ const createProfile = async (profile) => {
 
 const deleteProfile = async (id) => {
   try {
-    const deletedProfile = await db.one("DELETE FROM profiles WHERE id = $1 RETURNING *", id);
+    const deletedProfile = await db.one(
+      "DELETE FROM profiles WHERE id = $1 RETURNING *",
+      id
+    );
     return deletedProfile;
   } catch (err) {
     return err;
@@ -49,20 +52,27 @@ const deleteProfile = async (id) => {
 // We need to pass in the Profile - the information to change
 // && the ID of the Profile to access it in the DB
 const updateProfile = async (profile, id) => {
-  let { uid, name, cal, fat, carb, protein } = profile;
-
+  let { uid, name, cal, fat, carb, protein, recipes } = profile;
   try {
+    console.log(uid, name, cal, fat, carb)
     // first argument is the QUERY string
-    // second argument is the actual DATA 
-    const updatedProfile = await db.one("UPDATE profiles SET uid = $1, name = $2, cal = $3, fat = $4, carb = $5, protein = $6 WHERE id = $7 RETURNING *",
-    // remember the order MATTERS here 
-    // $1  $2   $3        $4           $5
-    [uid, name, cal, fat, carb, protein, id]);
+    // second argument is the actual DATA
+    const updatedProfile = await db.one(
+      "UPDATE profiles SET uid = $1, name = $2, cal = $3, fat = $4, carb = $5, protein = $6, recipes = $7 WHERE id = $8 RETURNING *",
+      // remember the order MATTERS here
+      // $1  $2   $3        $4           $5
+      [uid, name, cal, fat, carb, protein, recipes, id]
+    );
     return updatedProfile;
   } catch (err) {
     return err;
   }
-}
+};
 
-
-module.exports = { getAllProfiles, getProfile, createProfile, updateProfile, deleteProfile };
+module.exports = {
+  getAllProfiles,
+  getProfile,
+  createProfile,
+  updateProfile,
+  deleteProfile,
+};
