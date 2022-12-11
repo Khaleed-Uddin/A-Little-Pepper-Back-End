@@ -3,9 +3,6 @@ CREATE DATABASE alittle_pepper;
 
 \c alittle_pepper;
 
--- DROP TABLE IF EXISTS profiles;
-
-
 CREATE TABLE profiles(
     id SERIAL PRIMARY KEY, 
     uid TEXT NOT NULL,
