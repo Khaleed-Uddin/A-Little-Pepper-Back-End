@@ -11,7 +11,9 @@ app.use(express.json());
 app.use('/profiles', profileController);
 
 app.get('/', (req, res) => {
+    console.log("hello")
     res.send(`Welcome to A Little Pepper!!`)
+
 });
 
 app.get('*', (req, res) => {
