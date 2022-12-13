@@ -14,6 +14,7 @@ profiles.get("/", async (req, res) => {
   try {
     console.log( " !!!!!!!!!   FIRING PROFILE CONTROLLER !!!!!!!!")
     const allProfiles = await getAllProfiles();
+    console.log(allProfiles)
     if (allProfiles[0]) {
       res.status(200).json(allProfiles);
     } else {
