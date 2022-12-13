@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS alittle_pepper;
+DROP DATABASE IF EXISTS a_little_pepper;
 
 CREATE TABLE profiles(
     id SERIAL PRIMARY KEY, 
