@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS alittle_pepper;
-CREATE DATABASE alittle_pepper;
+DROP DATABASE IF EXISTS a_little_pepper;
+CREATE DATABASE a_little_pepper;
 
-\c alittle_pepper;
+\c a_little_pepper;
 
 CREATE TABLE profiles(
     id SERIAL PRIMARY KEY, 
