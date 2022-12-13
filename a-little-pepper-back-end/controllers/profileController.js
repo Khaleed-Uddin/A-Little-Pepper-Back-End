@@ -11,12 +11,19 @@ const {
 
 // INDEX
 profiles.get("/", async (req, res) => {
-  const allProfiles = await getAllProfiles();
-  if (allProfiles[0]) {
-    res.status(200).json(allProfiles);
-  } else {
-    res.status(500).json({ error: "server error" });
-  }
+  try {
+    console.log( " !!!!!!!!!   FIRING PROFILE CONTROLLER !!!!!!!!")
+    const allProfiles = await getAllProfiles();
+    if (allProfiles[0]) {
+      res.status(200).json(allProfiles);
+    } else {
+  
+      res.status(500).json({ error: "server error" });
+    }
+  } catch(err) {
+    console.log(err, ' this is from the profile.get route on line 23')
+  } 
+
 });
 
 profiles.get("/:uid", async (req, res) => {

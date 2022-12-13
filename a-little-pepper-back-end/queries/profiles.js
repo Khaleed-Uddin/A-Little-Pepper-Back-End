@@ -1,12 +1,14 @@
 const db = require("../db/dbConfig.js");
 
 const getAllProfiles = async () => {
+  console.log(db, "<----- this is our config obj")
+  
   try {
     const allProfiles = await db.any("SELECT * FROM profiles");
    
     return allProfiles;
   } catch (error) {
-    return error;
+    console.log(error, " fired from getAllProfilesQuery");
   }
 };
 
